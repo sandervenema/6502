@@ -1,5 +1,7 @@
 # 6502
 
+[![C/Meson CI](https://github.com/sandervenema/6502/actions/workflows/c-meson.yml/badge.svg?branch=main)](https://github.com/sandervenema/6502/actions/workflows/c-meson.yml)
+
 A 6502 emulator written in C.
 
 ## Build instructions
