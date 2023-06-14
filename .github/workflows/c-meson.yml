@@ -1,0 +1,19 @@
+name: C/Meson CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Prepare build
+      run: meson setup builddir
+    - name: Run build
+      run: meson compile -v -C builddir
