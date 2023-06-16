@@ -11,6 +11,7 @@
 
 // opcodes
 #define INS_LDA_IM 0xa9
+#define INS_LDA_ZP 0xa5
 
 struct Mem
 {

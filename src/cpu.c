@@ -74,6 +74,13 @@ void cpu_execute(struct CPU *cpu, struct Mem *mem, uint32_t cycles)
                 cpu_instr_lda_set_status(cpu);
                 break;
             };
+            case INS_LDA_ZP:
+            {
+                uint8_t zp_addr = mem_fetch_byte(cpu, mem, &cycles);
+                cpu->A = mem_read_byte(cpu, mem, zp_addr, &cycles);
+                cpu_instr_lda_set_status(cpu);
+                break;
+            };
             default:
             {
                 fprintf(stderr, "Instruction not handled: %d\n", instr);
