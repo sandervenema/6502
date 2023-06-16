@@ -31,6 +31,8 @@ struct CPU
 };
 
 void mem_initialise(struct Mem *mem);
+uint8_t mem_fetch_byte(struct CPU *cpu, struct Mem *mem, uint32_t *cycles);
+uint8_t mem_read_byte(struct CPU *cpu, struct Mem *mem, uint8_t zp_addr, uint32_t *cycles);
 
 void cpu_reset(struct CPU *cpu, struct Mem *mem);
 

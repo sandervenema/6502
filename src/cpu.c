@@ -15,6 +15,26 @@ void mem_initialise(struct Mem *mem)
     }
 }
 
+// fetch 1 byte from memory
+uint8_t mem_fetch_byte(struct CPU *cpu, struct Mem *mem, uint32_t *cycles)
+{
+    assert(cpu != NULL && mem != NULL && cycles != NULL);
+    assert(cpu->PC < MAX_MEM);
+    uint8_t data = mem->data[cpu->PC];
+    cpu->PC++;
+    (*cycles)--;
+    return data;
+}
+
+// read 1 byte from memory
+uint8_t mem_read_byte(struct CPU *cpu, struct Mem *mem, uint8_t zp_addr, uint32_t *cycles)
+{
+    assert(cpu != NULL && mem != NULL && cycles != NULL);
+    uint8_t data = mem->data[zp_addr];
+    (*cycles)--;
+    return data;
+}
+
 // reset the cpu
 void cpu_reset(struct CPU *cpu, struct Mem *mem)
 {
