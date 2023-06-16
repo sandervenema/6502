@@ -5,6 +5,7 @@
 
 #include <stddef.h>
 #include <assert.h>
+#include <stdio.h>
 
 // initialise the memory to zero
 void mem_initialise(struct Mem *mem)
@@ -46,4 +47,38 @@ void cpu_reset(struct CPU *cpu, struct Mem *mem)
     cpu->A = cpu->X = cpu->Y = 0;
     assert(mem != NULL);
     mem_initialise(mem);
+}
+
+
+// set the zero and negative flags correctly for LDA instruction
+void cpu_instr_lda_set_status(struct CPU *cpu)
+{
+    assert(cpu != NULL);
+    cpu->Z = (cpu->A == 0);
+    cpu->N = (cpu->A & 0x80) > 0;
+}
+
+// execute instructions on the cpu for cycles amount of cycles
+void cpu_execute(struct CPU *cpu, struct Mem *mem, uint32_t cycles)
+{
+    assert(cpu != NULL && mem != NULL);
+    while (cycles > 0)
+    {
+        uint8_t instr = mem_fetch_byte(cpu, mem, &cycles);
+        switch (instr)
+        {
+            case INS_LDA_IM: 
+            {
+                uint8_t value = mem_fetch_byte(cpu, mem, &cycles);
+                cpu->A = value;
+                cpu_instr_lda_set_status(cpu);
+                break;
+            };
+            default:
+            {
+                fprintf(stderr, "Instruction not handled: %d\n", instr);
+                break;
+            };
+        }
+    }
 }
